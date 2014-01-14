@@ -1,0 +1,8 @@
+{
+	"name": "amd-d3",
+	"description": "Experimental project to turn d3 into a suite of micro functions",
+	"devDependencies": {
+		"spelunk": "0.1.1",
+		"esprima": "~1.0.4"
+	}
+}
