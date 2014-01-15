@@ -1,8 +1,12 @@
 {
-	"name": "amd-d3",
-	"description": "Experimental project to turn d3 into a suite of micro functions",
-	"devDependencies": {
-		"spelunk": "0.1.1",
-		"esprima": "~1.0.4"
-	}
+  "name": "amd-d3",
+  "description": "Experimental project to turn d3 into a suite of micro functions",
+  "devDependencies": {
+    "spelunk": "0.1.1",
+    "esprima": "~1.0.4",
+    "escodegen": "~1.0.1",
+    "estraverse": "~1.5.0",
+    "mkdirp": "~0.3.5",
+    "rimraf": "~2.2.5"
+  }
 }
