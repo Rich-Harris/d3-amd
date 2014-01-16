@@ -20,8 +20,12 @@ transform_file = function ( contents, filePath ) {
 
 	// First, we need to get rid of the import directives, as they are not
 	// legal JavaScript and will trip up Esprima
-	cleaned = contents.replace( /^import (.+?);$/gm, function ( match, $1 ) {
-		return '_import(' + $1 + ');';
+	cleaned = contents.replace( /^import "(.+?)";$/gm, function ( match, $1 ) {
+		if ( !/index$/.test( filePath ) ) {
+			console.log( 'import directive: ', filePath, $1, path.resolve( filePath, '../', $1 ) );
+		}
+		
+		return '_import("' + $1 + '");';
 	});
 
 	// Then we generate an AST
@@ -37,23 +41,14 @@ transform_file = function ( contents, filePath ) {
 		enter: function ( node ) {
 			if ( signatures.import( node ) ) {
 				imports.push( node );
-
-				// e.g. d3.ascending = whatever
-				console.log( node );
 			}
 
 			if ( signatures.api_import( node ) ) {
 				api_imports.push( node );
-
-				// e.g. d3.ascending = whatever
-				console.log( node );
 			}
 
 			if ( signatures.api_export( node ) ) {
 				api_exports.push( node );
-
-				// e.g. d3.ascending = whatever
-				console.log( node );
 			}
 		}
 	});

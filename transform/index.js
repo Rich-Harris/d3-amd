@@ -37,7 +37,7 @@ spelunk( D3_SRC, function ( err, d3_src ) {
 				throw err;
 			}
 
-			transform_folder( d3_src, '/' );
+			transform_folder( d3_src, '/$test/' );
 		});
 	});
 });

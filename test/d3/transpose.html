@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>d3-amd Test Suite</title>
+	<link rel='stylesheet' href='../vendor/qunit.css' type='text/css' media='screen' />
+</head>
+<body>
+	<div id='qunit'></div>
+	<div id='qunit-fixture'></div>
+
+	<script src='../vendor/qunit.js'></script>
+	<script src='../vendor/require.js'></script>
+
+	<script>
+		require.config({
+			paths: {
+				d3: '../../out/d3',
+				assert: '../utils/assert',
+				runTests: '../utils/runTests'
+			}
+		});
+
+		require([ 'transpose' ], function ( transpose ) {
+			transpose();
+		});
+	</script>
+</body>
+</html>

@@ -14,12 +14,14 @@
 	<script>
 		require.config({
 			paths: {
-				d3: '../../out/d3'
+				d3: '../../out/d3',
+				assert: '../utils/assert',
+				runTests: '../utils/runTests'
 			}
 		});
 
-		require([ 'tests' ], function ( tests ) {
-			tests();
+		require([ 'median' ], function ( median ) {
+			median();
 		});
 	</script>
 </body>

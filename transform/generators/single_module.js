@@ -1,13 +1,18 @@
-var estraverse, escodegen, write_module, paths;
+var path, estraverse, escodegen, write_module, paths, template;
 
 estraverse = require( 'estraverse' );
 escodegen = require( 'escodegen' );
 write_module = require( '../write_module' );
+replace = require( '../replace' );
 
 paths = require( '../paths' );
 
+template = require( '../templates' ).single_module;
+
+console.log( 'single module template', template );
+
 module.exports = function ( ast, node ) {
-	var path, definition, code;
+	var path, definition, code, result;
 
 	path = 'd3/' + node.expression.left.property.name + '.js';
 
@@ -15,41 +20,26 @@ module.exports = function ( ast, node ) {
 	estraverse.replace( ast, {
 		enter: function ( candidate ) {
 			if ( candidate === node ) {
-				console.log( 'candidate === node' );
 				return {
 					type: 'ExpressionStatement',
 					expression: {
-						type: 'CallExpression',
-						callee: {
+						type: 'AssignmentExpression',
+						operator: '=',
+						left: {
 							type: 'Identifier',
-							name: 'define'
+							name: '_export'
 						},
-						arguments: [
-							{
-								type: 'FunctionExpression',
-								id: null,
-								params: [],
-								defaults: [],
-								body: {
-									type: 'BlockStatement',
-									body: [
-										{
-											type: 'ReturnStatement',
-											argument: node.expression.right
-										}
-									]
-								},
-								rest: null,
-								generator: false,
-								expression: false
-							}
-						]
+						right: node.expression.right
 					}
 				};
 			}
 		}
 	});
 
-	code = escodegen.generate( ast );
+	result = replace( template, {
+		$BODY: ast
+	});
+
+	code = escodegen.generate( result );
 	write_module( paths.OUTPUT, path, code );
 };

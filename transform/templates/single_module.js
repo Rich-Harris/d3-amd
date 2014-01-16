@@ -1,3 +1,7 @@
 define( function () {
-	return '$DEFINITION';
+	var _export;
+
+	'$BODY';
+
+	return _export;
 });
